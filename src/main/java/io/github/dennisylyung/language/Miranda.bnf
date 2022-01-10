@@ -1,0 +1,28 @@
+{
+  parserClass="io.github.dennisylyung.language.parser.MirandaParser"
+
+  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+
+  psiClassPrefix="Miranda"
+  psiImplClassSuffix="Impl"
+  psiPackage="io.github.dennisylyung.language.psi"
+  psiImplPackage="io.github.dennisylyung.language.psi.impl"
+
+  elementTypeHolderClass="io.github.dennisylyung.language.psi.MirandaTypes"
+  elementTypeClass="io.github.dennisylyung.language.psi.MirandaElementType"
+  tokenTypeClass="io.github.dennisylyung.language.psi.MirandaTokenType"
+}
+
+mirandaFile ::= (token | layout)*
+
+layout ::= NEW_LINE | WHITE_SPACE | COMMENT
+
+token ::= IDENTIFIER | literal | TYPEVAR | delimiter
+
+literal ::= numeral | CHAR | STRING
+
+numeral ::= NATURAL_NUMBER | float
+
+float ::=  DECIMAL EPART? | NATURAL_NUMBER EPART
+
+delimiter ::= OPERATOR | KEYWORD | '$' IDENTIFIER

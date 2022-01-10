@@ -1,0 +1,27 @@
+<idea-plugin>
+    <id>io.github.dennisylyung.intellij-miranda</id>
+    <name>SDK: Miranda Language</name>
+    <vendor email="dennisylyung@gmail.com" url="http://github.com/dennisylyung">Dennis Yung</vendor>
+
+    <description><![CDATA[
+    SDK for language Miranda, supporting file recognition.
+    ]]></description>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <fileType name="Miranda File"
+                  implementationClass="io.github.dennisylyung.language.MirandaFileType"
+                  fieldName="INSTANCE"
+                  language="Miranda"
+                  extensions="m"/>
+        <lang.parserDefinition language="Miranda"
+                               implementationClass="io.github.dennisylyung.language.MirandaParserDefinition"/>
+    </extensions>
+
+    <actions>
+        <!-- Add your actions here -->
+    </actions>
+</idea-plugin>
