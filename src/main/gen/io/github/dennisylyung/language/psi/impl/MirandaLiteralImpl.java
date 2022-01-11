@@ -29,8 +29,26 @@ public class MirandaLiteralImpl extends ASTWrapperPsiElement implements MirandaL
 
   @Override
   @Nullable
-  public MirandaNumeral getNumeral() {
-    return findChildByClass(MirandaNumeral.class);
+  public MirandaBool getBool() {
+    return findChildByClass(MirandaBool.class);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getChar() {
+    return findChildByType(CHAR);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getNumber() {
+    return findChildByType(NUMBER);
+  }
+
+  @Override
+  @Nullable
+  public PsiElement getString() {
+    return findChildByType(STRING);
   }
 
 }

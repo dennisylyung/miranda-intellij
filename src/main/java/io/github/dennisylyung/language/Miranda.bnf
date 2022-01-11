@@ -1,28 +1,240 @@
 {
-  parserClass="io.github.dennisylyung.language.parser.MirandaParser"
+  parserClass='io.github.dennisylyung.language.parser.MirandaParser'
 
-  extends="com.intellij.extapi.psi.ASTWrapperPsiElement"
+  extends='com.intellij.extapi.psi.ASTWrapperPsiElement'
 
-  psiClassPrefix="Miranda"
-  psiImplClassSuffix="Impl"
-  psiPackage="io.github.dennisylyung.language.psi"
-  psiImplPackage="io.github.dennisylyung.language.psi.impl"
+  psiClassPrefix='Miranda'
+  psiImplClassSuffix='Impl'
+  psiPackage='io.github.dennisylyung.language.psi'
+  psiImplPackage='io.github.dennisylyung.language.psi.impl'
 
-  elementTypeHolderClass="io.github.dennisylyung.language.psi.MirandaTypes"
-  elementTypeClass="io.github.dennisylyung.language.psi.MirandaElementType"
-  tokenTypeClass="io.github.dennisylyung.language.psi.MirandaTokenType"
+  elementTypeHolderClass='io.github.dennisylyung.language.psi.MirandaTypes'
+  elementTypeClass='io.github.dennisylyung.language.psi.MirandaElementType'
+  tokenTypeClass='io.github.dennisylyung.language.psi.MirandaTokenType'
+
+    tokens = [
+      OP_EQ='='
+      OP_DOUBLE_EQ='=='
+      OP_IS='::='
+      OP_SPEC='::'
+      OP_ARG='->'
+      OP_GENERATE='<-'
+      OP_OR='|'
+      OP_OPT='?'
+      OP_ONEMORE='+'
+      OP_ZEROMORE='*'
+      OP_AND='&'
+      OP_NOT='!'
+      OP_MINUS='-'
+      OP_DOTS='..'
+      OP_DOUBLE_ADD='++'
+      OP_DOUBLE_MINUS='--'
+      OP_BACK_FWD_SLASH='\/'
+      OP_GREATER='>'
+      OP_GREATER_EQUAL='>='
+      OP_SNAKE_ADD='~+'
+      OP_SMALLER_EQUAL='<='
+      OP_SMALLER='<'
+      OP_EXPONENT='^'
+      OP_DOT='.'
+      OP_SIMILAR='~'
+      OP_HASH='#'
+      SEP_COMMA=','
+      COLON=':'
+      SEMICOLON=';'
+      SLASH='/'
+      DOUBLE_SLASH='//'
+      LEFT_BRACE='{'
+      RIGHT_BRACE='}'
+      LEFT_BRACKET='['
+      RIGHT_BRACKET=']'
+      LEFT_PAREN='('
+      RIGHT_PAREN=')'
+      EXTERNAL_START='<<'
+      EXTERNAL_END='>>'
+      IF='if'
+      OTHERWISE='otherwise'
+      ABSTYPE='abstype'
+      WITH='with'
+      WHERE='where'
+      DIV='div'
+      MOD='mod'
+      READVALS='readvals'
+      SHOW='show'
+      INCLUDE='%include'
+      EXPORT='%export'
+      FREE='%free'
+      TRUE='True'
+      FALSE='False'
+      white_space='regexp:[ \t]+'
+      line_ending='regexp:[;\r\n]+'
+      comment='regexp:\|\|.*[\r\n]+'
+      char="regexp:'[^']?'"
+      string='regexp:["][^"]*["]'
+      number='regexp:\d+'
+      identifier_lower='regexp:[a-z][a-zA-Z0-9]*'
+      identifier_upper='regexp:[A-Z][a-zA-Z0-9]*'
+      pathname="regexp:('[^'\s]+')|(\<[^>\s]+\>)"
+    ]
 }
 
-mirandaFile ::= (token | layout)*
+script ::= decl*
 
-layout ::= NEW_LINE | WHITE_SPACE | COMMENT
+meta list ::= <<param>> ( ',' <<param>> ) *
 
-token ::= IDENTIFIER | literal | TYPEVAR | delimiter
+decl ::= def | tdef | spec | libdir | line_ending
 
-literal ::= numeral | CHAR | STRING
+def ::= fnform '=' rhs| pat '=' rhs
 
-numeral ::= NATURAL_NUMBER | float
+tdef ::= tform '==' type line_ending?
+    | tform '::=' constructs line_ending?
+    | 'abstype' tform-list 'with' sig line_ending?
 
-float ::=  DECIMAL EPART? | NATURAL_NUMBER EPART
+tform-list ::= <<list tform>>
 
-delimiter ::= OPERATOR | KEYWORD | '$' IDENTIFIER
+spec ::= var-list '::' type line_ending?
+    | tform-list '::' type line_ending?
+
+var-list ::= <<list var>>
+
+sig ::= spec+
+
+constructs ::= construct '|' constructs
+    | construct
+
+construct ::= constructor argtype*
+    | type constructor type
+    | '(' construct ')' argtype*
+
+type ::= typename_argtype
+    | type_to_type
+    | type_argtype
+    | type_name_type
+
+type_argtype ::= argtype {extends=type}
+
+typename_argtype ::= typename argtype* {extends=type}
+
+type_to_type ::= type '->' type {extends=type}
+
+type_name_type ::= type typename type {extends=type}
+
+argtype ::= typename
+    | typevar
+    | '(' type-list ')'
+    | '[' type-list ']'
+
+type-list ::= <<list type>>
+
+tform ::= typename typevar*
+    | typevar typename typevar
+
+fnform ::= var formal*
+    | pat var pat
+    | '(' fnform ')' formal*
+
+pat ::= pat_numeral
+    | pat_construct_formal
+    | pat_colon_pat
+    | pat_plus_pat
+    | pat_construct_pat
+    | pat_parenthesis_formal
+    | pat_formal
+
+pat_formal ::= formal {extends=pat}
+pat_numeral ::= '-' number {extends=pat}
+pat_construct_formal ::= constructor formal* {extends=pat}
+pat_colon_pat ::= pat ':' pat {extends=pat}
+pat_plus_pat ::= pat '+' pat {extends=pat}
+pat_construct_pat ::= pat constructor pat {extends=pat}
+pat_parenthesis_formal ::= '(' pat ')' formal* {extends=pat}
+
+formal ::= var
+    | constructor
+    | literal
+    | '(' pat-list? ')'
+    | '[' pat-list? ']'
+
+pat-list ::= <<list pat>>
+
+rhs ::= cases| simple_rhs line_ending?
+
+simple_rhs ::= exp whdefs?
+
+cases ::= alt line_ending? '=' cases
+    | lastcase line_ending?
+
+alt ::= exp ',' 'if'? exp
+
+lastcase ::= lastalt whdefs?
+
+lastalt ::= exp ',' 'if'? exp
+    | exp ',' 'otherwise'
+
+whdefs ::= 'where' def+
+
+exp ::= e1 | prefix1 | infix
+
+e1 ::= e1_simple | e1_prefix | e1_infix
+
+e1_simple ::= simple+ {extends=e1}
+e1_prefix ::= prefix e1 {extends=e1}
+e1_infix ::= e1 infix e1 {extends=e1}
+
+simple ::= var
+    | constructor
+    | literal
+    | 'readvals'
+    | 'show'
+    | '(' infix e1 ')'
+    | '(' e1 infix ')'
+    | '(' exps? ')'
+    | '[' exps? ']'
+    | '[' exp '..' exp? ']'
+    | '[' exp ',' exp '..' exp? ']'
+    | '[' exp '|' qualifs ']'
+    | '[' exp '//' qualifs ']'
+
+exps ::= <<list exp>>
+
+qualifs ::= qualifier line_ending qualifs | qualifier
+
+qualifier ::= exp | generator
+
+generator ::= pat-list '<-' exp
+    | pat '<-' exp ',' exp '..'
+
+var ::= identifier_lower
+
+constructor ::= identifier_upper
+
+typename ::= identifier_lower
+
+literal ::= number | char | string | bool
+
+bool ::= 'True' | 'False'
+
+typevar ::= '*'+
+
+infix ::= '++'|'--'|'\/'|'&'|'>'|'>='|'=='|'~+'|'<='|'<'|'+'|'-'|'*'|'/'|'div'|'mod'|'^'|'.'|'!'
+
+prefix1 ::= '~' | '#'
+
+prefix ::= '~' | '#' | '-'
+
+libdir ::= '%include' env line_ending?
+    | '%export' parts line_ending?
+    | '%free' '{' sig '}'
+
+env ::= pathname binder? aliases?
+binder ::= '{' binding+ '}'
+binding ::= var '=' exp line_ending?
+    | tform '==' type line_ending?
+aliases ::= aliase+
+aliase ::= identifier_lower '/' identifier_lower
+    | identifier_upper '/' identifier_upper
+parts ::= part+
+part ::= identifier_lower
+    | pathname
+    | '+'
+    | '-'identifier_lower

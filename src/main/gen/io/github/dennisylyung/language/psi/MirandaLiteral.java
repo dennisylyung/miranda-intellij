@@ -8,6 +8,15 @@ import com.intellij.psi.PsiElement;
 public interface MirandaLiteral extends PsiElement {
 
   @Nullable
-  MirandaNumeral getNumeral();
+  MirandaBool getBool();
+
+  @Nullable
+  PsiElement getChar();
+
+  @Nullable
+  PsiElement getNumber();
+
+  @Nullable
+  PsiElement getString();
 
 }

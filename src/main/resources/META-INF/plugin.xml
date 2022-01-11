@@ -19,6 +19,9 @@
                   extensions="m"/>
         <lang.parserDefinition language="Miranda"
                                implementationClass="io.github.dennisylyung.language.MirandaParserDefinition"/>
+        <lang.syntaxHighlighterFactory language="Miranda"
+                                       implementationClass="io.github.dennisylyung.language.MirandaSyntaxHighlighterFactory"/>
+
     </extensions>
 
     <actions>
