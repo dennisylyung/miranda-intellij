@@ -28,6 +28,8 @@
         <additionalTextAttributes scheme="Darcula" file="colorSchemes/MirandaDarcula.xml"/>
         <annotator language="Miranda" implementationClass="io.github.dennisylyung.language.MirandaAnnotator"/>
 
+        <lang.refactoringSupport language="Miranda"
+                                 implementationClass="io.github.dennisylyung.language.MirandaRefactoringSupportProvider"/>
     </extensions>
 
     <actions>

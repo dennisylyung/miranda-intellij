@@ -11,14 +11,14 @@ import static io.github.dennisylyung.language.psi.MirandaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.github.dennisylyung.language.psi.*;
 
-public class MirandaFormalImpl extends ASTWrapperPsiElement implements MirandaFormal {
+public class MirandaVarUsageImpl extends ASTWrapperPsiElement implements MirandaVarUsage {
 
-  public MirandaFormalImpl(@NotNull ASTNode node) {
+  public MirandaVarUsageImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull MirandaVisitor visitor) {
-    visitor.visitFormal(this);
+    visitor.visitVarUsage(this);
   }
 
   @Override
@@ -28,27 +28,9 @@ public class MirandaFormalImpl extends ASTWrapperPsiElement implements MirandaFo
   }
 
   @Override
-  @Nullable
-  public MirandaConstructor getConstructor() {
-    return findChildByClass(MirandaConstructor.class);
-  }
-
-  @Override
-  @Nullable
-  public MirandaLiteral getLiteral() {
-    return findChildByClass(MirandaLiteral.class);
-  }
-
-  @Override
-  @Nullable
-  public MirandaPatList getPatList() {
-    return findChildByClass(MirandaPatList.class);
-  }
-
-  @Override
-  @Nullable
-  public MirandaVarDecl getVarDecl() {
-    return findChildByClass(MirandaVarDecl.class);
+  @NotNull
+  public MirandaVar getVar() {
+    return findNotNullChildByClass(MirandaVar.class);
   }
 
 }

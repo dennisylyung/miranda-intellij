@@ -8,17 +8,16 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static io.github.dennisylyung.language.psi.MirandaTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.github.dennisylyung.language.psi.*;
 
-public class MirandaFormalImpl extends ASTWrapperPsiElement implements MirandaFormal {
+public class MirandaVarDeclImpl extends MirandaNamedElementImpl implements MirandaVarDecl {
 
-  public MirandaFormalImpl(@NotNull ASTNode node) {
+  public MirandaVarDeclImpl(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull MirandaVisitor visitor) {
-    visitor.visitFormal(this);
+    visitor.visitVarDecl(this);
   }
 
   @Override
@@ -28,27 +27,24 @@ public class MirandaFormalImpl extends ASTWrapperPsiElement implements MirandaFo
   }
 
   @Override
-  @Nullable
-  public MirandaConstructor getConstructor() {
-    return findChildByClass(MirandaConstructor.class);
+  @NotNull
+  public MirandaVar getVar() {
+    return findNotNullChildByClass(MirandaVar.class);
   }
 
   @Override
-  @Nullable
-  public MirandaLiteral getLiteral() {
-    return findChildByClass(MirandaLiteral.class);
+  public String getName() {
+    return MirandaPsiImplUtil.getName(this);
   }
 
   @Override
-  @Nullable
-  public MirandaPatList getPatList() {
-    return findChildByClass(MirandaPatList.class);
+  public PsiElement setName(String newName) {
+    return MirandaPsiImplUtil.setName(this, newName);
   }
 
   @Override
-  @Nullable
-  public MirandaVarDecl getVarDecl() {
-    return findChildByClass(MirandaVarDecl.class);
+  public PsiElement getNameIdentifier() {
+    return MirandaPsiImplUtil.getNameIdentifier(this);
   }
 
 }

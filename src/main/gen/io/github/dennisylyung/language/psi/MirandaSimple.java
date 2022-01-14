@@ -29,6 +29,6 @@ public interface MirandaSimple extends PsiElement {
   MirandaQualifs getQualifs();
 
   @Nullable
-  MirandaVar getVar();
+  MirandaVarUsage getVarUsage();
 
 }

@@ -47,8 +47,8 @@ public class MirandaFnformImpl extends ASTWrapperPsiElement implements MirandaFn
 
   @Override
   @Nullable
-  public MirandaVar getVar() {
-    return findChildByClass(MirandaVar.class);
+  public MirandaVarDecl getVarDecl() {
+    return findChildByClass(MirandaVarDecl.class);
   }
 
 }

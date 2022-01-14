@@ -255,7 +255,19 @@ public class MirandaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitVarDecl(@NotNull MirandaVarDecl o) {
+    visitNamedElement(o);
+  }
+
+  public void visitVarUsage(@NotNull MirandaVarUsage o) {
+    visitPsiElement(o);
+  }
+
   public void visitWhdefs(@NotNull MirandaWhdefs o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNamedElement(@NotNull MirandaNamedElement o) {
     visitPsiElement(o);
   }
 

@@ -12,6 +12,8 @@
   elementTypeClass='io.github.dennisylyung.language.psi.MirandaElementType'
   tokenTypeClass='io.github.dennisylyung.language.psi.MirandaTokenType'
 
+  psiImplUtilClass="io.github.dennisylyung.language.psi.impl.MirandaPsiImplUtil"
+
     tokens = [
       OP_EQ='='
       OP_DOUBLE_EQ='=='
@@ -95,7 +97,7 @@ tform-list ::= <<list tform>>
 spec ::= var-list '::' type line_ending?
     | tform-list '::' type line_ending?
 
-var-list ::= <<list var>>
+var-list ::= <<list var_decl>>
 
 sig ::= spec+
 
@@ -129,8 +131,8 @@ type-list ::= <<list type>>
 tform ::= typename typevar*
     | typevar typename typevar
 
-fnform ::= var formal*
-    | pat var pat
+fnform ::= var_decl formal*
+    | pat var_decl pat
     | '(' fnform ')' formal*
 
 pat ::= pat_numeral
@@ -149,7 +151,7 @@ pat_plus_pat ::= pat '+' pat {extends=pat}
 pat_construct_pat ::= pat constructor pat {extends=pat}
 pat_parenthesis_formal ::= '(' pat ')' formal* {extends=pat}
 
-formal ::= var
+formal ::= var_decl
     | constructor
     | literal
     | '(' pat-list? ')'
@@ -181,7 +183,7 @@ e1_simple ::= simple+ {extends=e1}
 e1_prefix ::= prefix e1 {extends=e1}
 e1_infix ::= e1 infix e1 {extends=e1}
 
-simple ::= var
+simple ::= var_usage
     | constructor
     | literal
     | 'readvals'
@@ -204,7 +206,15 @@ qualifier ::= exp | generator
 generator ::= pat-list '<-' exp
     | pat '<-' exp ',' exp '..'
 
-var ::= identifier_lower
+var_decl ::= var {
+                  mixin="io.github.dennisylyung.language.psi.impl.MirandaNamedElementImpl"
+                  implements="io.github.dennisylyung.language.psi.MirandaNamedElement"
+                  methods=[getName setName getNameIdentifier]
+                }
+
+var_usage ::= var
+
+var ::= identifier_lower {methods=[getReference]}
 
 constructor ::= identifier_upper
 
