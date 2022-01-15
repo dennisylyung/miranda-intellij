@@ -26,6 +26,8 @@ public class MirandaSyntaxHighlighter extends SyntaxHighlighterBase {
             createTextAttributesKey("MIRANDA_STRING", DefaultLanguageHighlighterColors.STRING);
     public static final TextAttributesKey COMMENT =
             createTextAttributesKey("MIRANDA_COMMENT", DefaultLanguageHighlighterColors.LINE_COMMENT);
+    public static final TextAttributesKey TYPEVAR =
+            createTextAttributesKey("MIRANDA_TYPEVAR", DefaultLanguageHighlighterColors.NUMBER);
     public static final TextAttributesKey BAD_CHARACTER =
             createTextAttributesKey("MIRANDA_BAD_CHARACTER", HighlighterColors.BAD_CHARACTER);
 

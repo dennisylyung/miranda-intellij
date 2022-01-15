@@ -10,6 +10,7 @@
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
          on how to target different products -->
     <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.java</depends>
 
     <extensions defaultExtensionNs="com.intellij">
         <fileType name="Miranda File"
@@ -21,6 +22,9 @@
                                implementationClass="io.github.dennisylyung.language.MirandaParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Miranda"
                                        implementationClass="io.github.dennisylyung.language.MirandaSyntaxHighlighterFactory"/>
+        <additionalTextAttributes scheme="Default" file="colorSchemes/MirandaDefault.xml"/>
+        <additionalTextAttributes scheme="Darcula" file="colorSchemes/MirandaDarcula.xml"/>
+        <annotator language="Miranda" implementationClass="io.github.dennisylyung.language.MirandaAnnotator"/>
 
     </extensions>
 
