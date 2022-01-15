@@ -22,6 +22,8 @@
                                implementationClass="io.github.dennisylyung.language.MirandaParserDefinition"/>
         <lang.syntaxHighlighterFactory language="Miranda"
                                        implementationClass="io.github.dennisylyung.language.MirandaSyntaxHighlighterFactory"/>
+        <lang.braceMatcher language="Miranda"
+                           implementationClass="io.github.dennisylyung.language.MirandaBraceMatcher"/>
         <additionalTextAttributes scheme="Default" file="colorSchemes/MirandaDefault.xml"/>
         <additionalTextAttributes scheme="Darcula" file="colorSchemes/MirandaDarcula.xml"/>
         <annotator language="Miranda" implementationClass="io.github.dennisylyung.language.MirandaAnnotator"/>
