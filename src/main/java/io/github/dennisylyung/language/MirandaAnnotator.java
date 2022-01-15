@@ -15,11 +15,14 @@ import io.github.dennisylyung.language.psi.MirandaVarList;
 import io.github.dennisylyung.language.psi.impl.MirandaFnformImpl;
 import io.github.dennisylyung.language.psi.impl.MirandaSpecImpl;
 import io.github.dennisylyung.language.psi.impl.MirandaTdefImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaTypevarImpl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static io.github.dennisylyung.language.MirandaSyntaxHighlighter.TYPEVAR;
 
 public class MirandaAnnotator implements Annotator {
 
@@ -36,6 +39,10 @@ public class MirandaAnnotator implements Annotator {
 
         if (element instanceof MirandaTdefImpl) {
             annotateTypeConstructor(element, holder);
+        }
+
+        if (element instanceof MirandaTypevarImpl) {
+            annotateTypevar(element, holder);
         }
     }
 
@@ -95,6 +102,11 @@ public class MirandaAnnotator implements Annotator {
             }
         }
         return constructors;
+    }
+
+    private void annotateTypevar(@NotNull final PsiElement element, @NotNull AnnotationHolder holder) {
+        holder.newSilentAnnotation(HighlightSeverity.INFORMATION)
+                .range(element.getTextRange()).textAttributes(TYPEVAR).create();
     }
 
 }
