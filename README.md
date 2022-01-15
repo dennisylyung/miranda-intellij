@@ -21,4 +21,4 @@ Miranda SDK plugin for Intellij IDEs. Work in progress.
 - [Miranda Manual](https://www.cs.kent.ac.uk/people/staff/dat/miranda/manual/)
     - [Grammar](https://www.cs.kent.ac.uk/people/staff/dat/miranda/manual/24.html)
     - [Syntax](https://www.cs.kent.ac.uk/people/staff/dat/miranda/manual/26.html)
-- [JFlex Manual](https://jflex.de/manual.html#Example)
+- [Grammar-Kit](https://github.com/JetBrains/Grammar-Kit)
