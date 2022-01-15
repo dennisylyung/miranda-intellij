@@ -2,8 +2,12 @@ package io.github.dennisylyung.language;
 
 import com.intellij.codeInsight.lookup.LookupElement;
 import com.intellij.codeInsight.lookup.LookupElementBuilder;
-import com.intellij.openapi.project.Project;
-import com.intellij.psi.*;
+import com.intellij.openapi.util.TextRange;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiElementResolveResult;
+import com.intellij.psi.PsiPolyVariantReference;
+import com.intellij.psi.PsiReferenceBase;
+import com.intellij.psi.ResolveResult;
 import io.github.dennisylyung.language.psi.MirandaVar;
 import io.github.dennisylyung.language.psi.MirandaVarDecl;
 import org.jetbrains.annotations.NotNull;
@@ -17,19 +21,22 @@ public class MirandaReference extends PsiReferenceBase<PsiElement> implements Ps
     private final String key;
 
     public MirandaReference(@NotNull PsiElement element) {
-        super(element, element.getTextRange());
+        super(element, TextRange.from(element.getStartOffsetInParent(), element.getTextLength()));
         key = element.getText();
     }
 
     @Override
     public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
-        Project project = myElement.getProject();
-        final List<MirandaVarDecl> vars = MirandaUtil.findVars(project, key);
+        if (!(myElement instanceof MirandaVar)) {
+            return ResolveResult.EMPTY_ARRAY;
+        }
+        MirandaVar var = (MirandaVar) myElement;
+        final List<MirandaVarDecl> vars = MirandaUtil.findDeclarations(var, key);
         List<ResolveResult> results = new ArrayList<>();
         for (MirandaVarDecl Var : vars) {
             results.add(new PsiElementResolveResult(Var));
         }
-        return results.toArray(new ResolveResult[results.size()]);
+        return results.toArray(new ResolveResult[0]);
     }
 
     @Nullable
@@ -41,10 +48,13 @@ public class MirandaReference extends PsiReferenceBase<PsiElement> implements Ps
 
     @Override
     public Object @NotNull [] getVariants() {
-        Project project = myElement.getProject();
-        List<MirandaVar> properties = MirandaUtil.findVars(project);
+        if (!(myElement instanceof MirandaVar)) {
+            return ResolveResult.EMPTY_ARRAY;
+        }
+        MirandaVar var = (MirandaVar) myElement;
+        List<MirandaVarDecl> vars = MirandaUtil.findDeclarations(var, null);
         List<LookupElement> variants = new ArrayList<>();
-        for (final MirandaVar Var : properties) {
+        for (final MirandaVarDecl Var : vars) {
             if (Var.getText() != null && Var.getText().length() > 0) {
                 variants.add(LookupElementBuilder
                         .create(Var).withIcon(MirandaIcons.FILE)

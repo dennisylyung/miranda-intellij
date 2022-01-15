@@ -11,6 +11,7 @@ import io.github.dennisylyung.language.psi.MirandaConstructor;
 import io.github.dennisylyung.language.psi.MirandaConstructs;
 import io.github.dennisylyung.language.psi.MirandaList;
 import io.github.dennisylyung.language.psi.MirandaVar;
+import io.github.dennisylyung.language.psi.MirandaVarDecl;
 import io.github.dennisylyung.language.psi.MirandaVarList;
 import io.github.dennisylyung.language.psi.impl.MirandaFnformImpl;
 import io.github.dennisylyung.language.psi.impl.MirandaSpecImpl;
@@ -65,11 +66,11 @@ public class MirandaAnnotator implements Annotator {
         if (list == null) {
             return;
         }
-        @Nullable MirandaVar[] vars = PsiTreeUtil.getChildrenOfType(list, MirandaVar.class);
+        @Nullable MirandaVarDecl[] vars = PsiTreeUtil.getChildrenOfType(list, MirandaVarDecl.class);
         if (vars == null) {
             return;
         }
-        for (MirandaVar var : vars) {
+        for (MirandaVarDecl var : vars) {
             if (var == null) {
                 continue;
             }
