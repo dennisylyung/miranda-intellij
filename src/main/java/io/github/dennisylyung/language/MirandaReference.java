@@ -56,18 +56,28 @@ public class MirandaReference extends PsiReferenceBase<PsiElement> implements Ps
 
     @Override
     public Object @NotNull [] getVariants() {
-        if (!(myElement instanceof MirandaVar)) {
-            return ResolveResult.EMPTY_ARRAY;
-        }
-        MirandaVar var = (MirandaVar) myElement;
-        List<MirandaVarDecl> vars = MirandaUtil.findFunctionDeclarations(var, null);
         List<LookupElement> variants = new ArrayList<>();
-        for (final MirandaVarDecl Var : vars) {
-            if (Var.getText() != null && Var.getText().length() > 0) {
-                variants.add(LookupElementBuilder
-                        .create(Var).withIcon(MirandaIcons.FILE)
-                        .withTypeText(Var.getContainingFile().getName())
-                );
+        if (myElement instanceof MirandaVar) {
+            MirandaVar var = (MirandaVar) myElement;
+            final List<MirandaVarDecl> vars = MirandaUtil.findFunctionDeclarations(var, null);
+            for (MirandaVarDecl target : vars) {
+                if (target.getText() != null && target.getText().length() > 0) {
+                    variants.add(LookupElementBuilder
+                            .create(target).withIcon(MirandaIcons.FILE)
+                            .withTypeText(target.getContainingFile().getName())
+                    );
+                }
+            }
+        } else if (myElement instanceof MirandaTypename) {
+            MirandaTypename typename = (MirandaTypename) myElement;
+            final List<MirandaTypename> typenames = MirandaUtil.findTypeDefinitions(typename, null);
+            for (MirandaTypename target : typenames) {
+                if (target.getText() != null && target.getText().length() > 0) {
+                    variants.add(LookupElementBuilder
+                            .create(target).withIcon(MirandaIcons.FILE)
+                            .withTypeText(target.getContainingFile().getName())
+                    );
+                }
             }
         }
         return variants.toArray();
