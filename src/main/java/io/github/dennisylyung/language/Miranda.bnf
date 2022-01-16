@@ -207,10 +207,10 @@ generator ::= pat-list '<-' exp
     | pat '<-' exp ',' exp '..'
 
 var_decl ::= var {
-                  mixin="io.github.dennisylyung.language.psi.impl.MirandaNamedElementImpl"
-                  implements="io.github.dennisylyung.language.psi.MirandaNamedElement"
-                  methods=[getName setName getNameIdentifier]
-                }
+    mixin="io.github.dennisylyung.language.psi.impl.MirandaNamedElementImpl"
+    implements="io.github.dennisylyung.language.psi.MirandaNamedElement"
+    methods=[getName setName getNameIdentifier]
+}
 
 var_usage ::= var
 
@@ -218,7 +218,11 @@ var ::= identifier_lower {methods=[getReference]}
 
 constructor ::= identifier_upper
 
-typename ::= identifier_lower
+typename ::= identifier_lower  {
+    mixin="io.github.dennisylyung.language.psi.impl.MirandaNamedElementImpl"
+    implements="io.github.dennisylyung.language.psi.MirandaNamedElement"
+    methods=[getName setName getNameIdentifier getReference]
+}
 
 literal ::= number | char | string | bool
 

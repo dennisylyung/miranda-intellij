@@ -1,5 +1,6 @@
 package io.github.dennisylyung.language;
 
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.util.PsiTreeUtil;
 import io.github.dennisylyung.language.psi.MirandaDecl;
@@ -9,6 +10,11 @@ import io.github.dennisylyung.language.psi.MirandaFormal;
 import io.github.dennisylyung.language.psi.MirandaList;
 import io.github.dennisylyung.language.psi.MirandaRhs;
 import io.github.dennisylyung.language.psi.MirandaSpec;
+import io.github.dennisylyung.language.psi.MirandaTdef;
+import io.github.dennisylyung.language.psi.MirandaTform;
+import io.github.dennisylyung.language.psi.MirandaTformList;
+import io.github.dennisylyung.language.psi.MirandaType;
+import io.github.dennisylyung.language.psi.MirandaTypename;
 import io.github.dennisylyung.language.psi.MirandaVar;
 import io.github.dennisylyung.language.psi.MirandaVarDecl;
 import io.github.dennisylyung.language.psi.MirandaVarList;
@@ -19,7 +25,7 @@ import java.util.List;
 
 public class MirandaUtil {
 
-    public static List<MirandaVarDecl> findDeclarations(MirandaVar reference, @Nullable String key) {
+    public static List<MirandaVarDecl> findFunctionDeclarations(MirandaVar reference, @Nullable String key) {
         List<MirandaVarDecl> declarations = new ArrayList<>();
         @Nullable MirandaRhs rhs = PsiTreeUtil.getParentOfType(reference, MirandaRhs.class);
         if (rhs != null) {
@@ -98,4 +104,48 @@ public class MirandaUtil {
         return declarations;
     }
 
+    public static List<MirandaTypename> findTypeDefinitions(MirandaTypename reference, @Nullable String key) {
+        List<MirandaTypename> types = new ArrayList<>();
+        if (PsiTreeUtil.getParentOfType(reference, MirandaType.class) == null) {
+            return types;
+        }
+        PsiFile file = PsiTreeUtil.getParentOfType(reference, PsiFile.class);
+        @Nullable MirandaDecl[] statements = PsiTreeUtil.getChildrenOfType(file, MirandaDecl.class);
+        if (statements == null) {
+            return types;
+        }
+        for (MirandaDecl statement : statements) {
+            PsiElement definition = PsiTreeUtil.getChildOfAnyType(statement, MirandaTdef.class, MirandaSpec.class);
+            if (definition != null) {
+                MirandaTformList tformList = PsiTreeUtil.findChildOfType(definition, MirandaTformList.class);
+                if (tformList != null) {
+                    MirandaList list = PsiTreeUtil.getChildOfType(tformList, MirandaList.class);
+                    if (list != null) {
+                        MirandaTform[] tforms = PsiTreeUtil.getChildrenOfType(list, MirandaTform.class);
+                        if (tforms != null) {
+                            for (MirandaTform tform : tforms) {
+                                MirandaTypename type = PsiTreeUtil.findChildOfType(tform, MirandaTypename.class);
+                                if (type != null) {
+                                    if (key == null || key.equals(type.getText())) {
+                                        types.add(type);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    MirandaTform tform = PsiTreeUtil.findChildOfType(definition, MirandaTform.class);
+                    if (tform != null) {
+                        MirandaTypename type = PsiTreeUtil.findChildOfType(tform, MirandaTypename.class);
+                        if (type != null) {
+                            if (key == null || key.equals(type.getText())) {
+                                types.add(type);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return types;
+    }
 }

@@ -8,6 +8,7 @@ import com.intellij.psi.PsiElementResolveResult;
 import com.intellij.psi.PsiPolyVariantReference;
 import com.intellij.psi.PsiReferenceBase;
 import com.intellij.psi.ResolveResult;
+import io.github.dennisylyung.language.psi.MirandaTypename;
 import io.github.dennisylyung.language.psi.MirandaVar;
 import io.github.dennisylyung.language.psi.MirandaVarDecl;
 import org.jetbrains.annotations.NotNull;
@@ -27,14 +28,21 @@ public class MirandaReference extends PsiReferenceBase<PsiElement> implements Ps
 
     @Override
     public ResolveResult @NotNull [] multiResolve(boolean incompleteCode) {
-        if (!(myElement instanceof MirandaVar)) {
-            return ResolveResult.EMPTY_ARRAY;
-        }
-        MirandaVar var = (MirandaVar) myElement;
-        final List<MirandaVarDecl> vars = MirandaUtil.findDeclarations(var, key);
         List<ResolveResult> results = new ArrayList<>();
-        for (MirandaVarDecl Var : vars) {
-            results.add(new PsiElementResolveResult(Var));
+        if (myElement instanceof MirandaVar) {
+            MirandaVar var = (MirandaVar) myElement;
+            final List<MirandaVarDecl> vars = MirandaUtil.findFunctionDeclarations(var, key);
+            for (MirandaVarDecl target : vars) {
+                results.add(new PsiElementResolveResult(target));
+            }
+        } else if (myElement instanceof MirandaTypename) {
+            MirandaTypename typename = (MirandaTypename) myElement;
+            final List<MirandaTypename> typenames = MirandaUtil.findTypeDefinitions(typename, key);
+            for (MirandaTypename target : typenames) {
+                results.add(new PsiElementResolveResult(target));
+            }
+        } else {
+            return ResolveResult.EMPTY_ARRAY;
         }
         return results.toArray(new ResolveResult[0]);
     }
@@ -52,7 +60,7 @@ public class MirandaReference extends PsiReferenceBase<PsiElement> implements Ps
             return ResolveResult.EMPTY_ARRAY;
         }
         MirandaVar var = (MirandaVar) myElement;
-        List<MirandaVarDecl> vars = MirandaUtil.findDeclarations(var, null);
+        List<MirandaVarDecl> vars = MirandaUtil.findFunctionDeclarations(var, null);
         List<LookupElement> variants = new ArrayList<>();
         for (final MirandaVarDecl Var : vars) {
             if (Var.getText() != null && Var.getText().length() > 0) {

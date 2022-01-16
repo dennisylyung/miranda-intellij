@@ -1,17 +1,17 @@
 // This is a generated file. Not intended for manual editing.
 package io.github.dennisylyung.language.psi.impl;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
 import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
-import static io.github.dennisylyung.language.psi.MirandaTypes.*;
-import com.intellij.extapi.psi.ASTWrapperPsiElement;
-import io.github.dennisylyung.language.psi.*;
+import io.github.dennisylyung.language.MirandaReference;
+import io.github.dennisylyung.language.psi.MirandaTypename;
+import io.github.dennisylyung.language.psi.MirandaVisitor;
+import org.jetbrains.annotations.NotNull;
 
-public class MirandaTypenameImpl extends ASTWrapperPsiElement implements MirandaTypename {
+import static io.github.dennisylyung.language.psi.MirandaTypes.IDENTIFIER_LOWER;
+
+public class MirandaTypenameImpl extends MirandaNamedElementImpl implements MirandaTypename {
 
   public MirandaTypenameImpl(@NotNull ASTNode node) {
     super(node);
@@ -23,7 +23,7 @@ public class MirandaTypenameImpl extends ASTWrapperPsiElement implements Miranda
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof MirandaVisitor) accept((MirandaVisitor)visitor);
+    if (visitor instanceof MirandaVisitor) accept((MirandaVisitor) visitor);
     else super.accept(visitor);
   }
 
@@ -31,6 +31,26 @@ public class MirandaTypenameImpl extends ASTWrapperPsiElement implements Miranda
   @NotNull
   public PsiElement getIdentifierLower() {
     return findNotNullChildByType(IDENTIFIER_LOWER);
+  }
+
+  @Override
+  public String getName() {
+    return MirandaPsiImplUtil.getName(this);
+  }
+
+  @Override
+  public PsiElement setName(String newName) {
+    return MirandaPsiImplUtil.setName(this, newName);
+  }
+
+  @Override
+  public PsiElement getNameIdentifier() {
+    return MirandaPsiImplUtil.getNameIdentifier(this);
+  }
+
+  @Override
+  public MirandaReference getReference() {
+    return MirandaPsiImplUtil.getReference(this);
   }
 
 }
