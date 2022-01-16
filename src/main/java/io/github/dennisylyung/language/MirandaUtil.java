@@ -8,6 +8,8 @@ import io.github.dennisylyung.language.psi.MirandaDef;
 import io.github.dennisylyung.language.psi.MirandaFnform;
 import io.github.dennisylyung.language.psi.MirandaFormal;
 import io.github.dennisylyung.language.psi.MirandaList;
+import io.github.dennisylyung.language.psi.MirandaPat;
+import io.github.dennisylyung.language.psi.MirandaPatList;
 import io.github.dennisylyung.language.psi.MirandaRhs;
 import io.github.dennisylyung.language.psi.MirandaSpec;
 import io.github.dennisylyung.language.psi.MirandaTdef;
@@ -52,10 +54,59 @@ public class MirandaUtil {
             return null;
         }
         for (MirandaFormal formal : formals) {
-            @Nullable MirandaVarDecl varDecl = PsiTreeUtil.getChildOfType(formal, MirandaVarDecl.class);
-            if (varDecl != null) {
-                if (key == null || key.equals(varDecl.getText())) {
-                    return varDecl;
+            MirandaVarDecl var = findVarInFormal(formal, key);
+            if (var != null) {
+                return var;
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    static MirandaVarDecl findVarInFormal(MirandaFormal formal, @Nullable String key) {
+        MirandaVarDecl var = PsiTreeUtil.getChildOfType(formal, MirandaVarDecl.class);
+        if (var != null) {
+            if (key == null || key.equals(var.getText())) {
+                return var;
+            } else {
+                return null;
+            }
+        }
+        MirandaPatList patList = PsiTreeUtil.getChildOfType(formal, MirandaPatList.class);
+        if (patList != null) {
+            MirandaList list = PsiTreeUtil.getChildOfType(patList, MirandaList.class);
+            if (list != null) {
+                MirandaPat[] pats = PsiTreeUtil.getChildrenOfType(list, MirandaPat.class);
+                if (pats != null) {
+                    for (MirandaPat pat : pats) {
+                        var = findVarInPat(pat, key);
+                        if (var != null) {
+                            return var;
+                        }
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    @Nullable
+    static MirandaVarDecl findVarInPat(MirandaPat pat, @Nullable String key) {
+        MirandaFormal[] formals = PsiTreeUtil.getChildrenOfType(pat, MirandaFormal.class);
+        if (formals != null) {
+            for (MirandaFormal f : formals) {
+                MirandaVarDecl var = findVarInFormal(f, key);
+                if (var != null) {
+                    return var;
+                }
+            }
+        }
+        MirandaPat[] pats = PsiTreeUtil.getChildrenOfType(pat, MirandaPat.class);
+        if (pats != null) {
+            for (MirandaPat p : pats) {
+                MirandaVarDecl var = findVarInPat(p, key);
+                if (var != null) {
+                    return var;
                 }
             }
         }
@@ -81,25 +132,24 @@ public class MirandaUtil {
                     }
                     continue;
                 }
-                MirandaSpec spec = PsiTreeUtil.getChildOfType(def, MirandaSpec.class);
-                if (spec != null) {
-                    MirandaVarList varList = PsiTreeUtil.getChildOfType(spec, MirandaVarList.class);
-                    if (varList != null) {
-                        MirandaList list = PsiTreeUtil.getChildOfType(varList, MirandaList.class);
-                        if (list != null) {
-                            MirandaVarDecl[] varDecls = PsiTreeUtil.getChildrenOfType(list, MirandaVarDecl.class);
-                            if (varDecls != null) {
-                                for (MirandaVarDecl varDecl : varDecls) {
-                                    if (key == null || key.equals(varDecl.getText())) {
-                                        declarations.add(varDecl);
-                                    }
+            }
+            MirandaSpec spec = PsiTreeUtil.getChildOfType(statement, MirandaSpec.class);
+            if (spec != null) {
+                MirandaVarList varList = PsiTreeUtil.getChildOfType(spec, MirandaVarList.class);
+                if (varList != null) {
+                    MirandaList list = PsiTreeUtil.getChildOfType(varList, MirandaList.class);
+                    if (list != null) {
+                        MirandaVarDecl[] varDecls = PsiTreeUtil.getChildrenOfType(list, MirandaVarDecl.class);
+                        if (varDecls != null) {
+                            for (MirandaVarDecl varDecl : varDecls) {
+                                if (key == null || key.equals(varDecl.getText())) {
+                                    declarations.add(varDecl);
                                 }
                             }
                         }
                     }
                 }
             }
-
         }
         return declarations;
     }
