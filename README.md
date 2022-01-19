@@ -13,10 +13,12 @@ Miranda SDK plugin for Intellij IDEs. Work in progress.
   * Type definitions
   * Type parameters
 * Matching braces highlighting
-* Referencing
-  * Variable declarations
-  * Function arguments
-  * Type definitions
+
+### Referencing
+
+* Variable declarations
+* Function arguments
+* Type definitions
 
 ## Installation
 
