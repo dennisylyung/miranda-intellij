@@ -1,15 +1,36 @@
 // This is a generated file. Not intended for manual editing.
 package io.github.dennisylyung.language.parser;
 
+import com.intellij.lang.ASTNode;
+import com.intellij.lang.LightPsiParser;
 import com.intellij.lang.PsiBuilder;
 import com.intellij.lang.PsiBuilder.Marker;
-import static io.github.dennisylyung.language.psi.MirandaTypes.*;
-import static com.intellij.lang.parser.GeneratedParserUtilBase.*;
-import com.intellij.psi.tree.IElementType;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.tree.TokenSet;
 import com.intellij.lang.PsiParser;
-import com.intellij.lang.LightPsiParser;
+import com.intellij.psi.tree.IElementType;
+import com.intellij.psi.tree.TokenSet;
+
+import static com.intellij.lang.parser.GeneratedParserUtilBase.Parser;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.TRUE_CONDITION;
+import static com.intellij.lang.parser.GeneratedParserUtilBase._COLLAPSE_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase._LEFT_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase._NONE_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.adapt_builder_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.addVariant;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.consumeToken;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.consumeTokenSmart;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.consumeTokens;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.consumeTokensSmart;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.create_token_set_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.current_position_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.empty_element_parsed_guard_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.enter_section_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.exit_section_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.nextTokenIs;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.nextTokenIsSmart;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.parseTokens;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.recursion_guard_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.report_error_;
+import static io.github.dennisylyung.language.psi.MirandaTypes.*;
 
 @SuppressWarnings({"SimplifiableIfStatement", "UnusedAssignment"})
 public class MirandaParser implements PsiParser, LightPsiParser {
@@ -667,13 +688,14 @@ public class MirandaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // '++'|'--'|'\/'|'&'|'>'|'>='|'=='|'~+'|'<='|'<'|'+'|'-'|'*'|'/'|'div'|'mod'|'^'|'.'|'!'
+  // '++'|'--'|':'|'\/'|'&'|'>'|'>='|'=='|'~+'|'<='|'<'|'+'|'-'|'*'|'/'|'div'|'mod'|'^'|'.'|'!'
   public static boolean infix(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "infix")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, INFIX, "<infix>");
     r = consumeToken(b, OP_DOUBLE_ADD);
     if (!r) r = consumeToken(b, OP_DOUBLE_MINUS);
+    if (!r) r = consumeToken(b, COLON);
     if (!r) r = consumeToken(b, OP_BACK_FWD_SLASH);
     if (!r) r = consumeToken(b, OP_AND);
     if (!r) r = consumeToken(b, OP_GREATER);
