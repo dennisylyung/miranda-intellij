@@ -10,6 +10,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import static io.github.dennisylyung.language.psi.MirandaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import io.github.dennisylyung.language.psi.*;
+import io.github.dennisylyung.language.MirandaReference;
 
 public class MirandaVarImpl extends ASTWrapperPsiElement implements MirandaVar {
 
@@ -31,6 +32,11 @@ public class MirandaVarImpl extends ASTWrapperPsiElement implements MirandaVar {
   @NotNull
   public PsiElement getIdentifierLower() {
     return findNotNullChildByType(IDENTIFIER_LOWER);
+  }
+
+  @Override
+  public MirandaReference getReference() {
+    return MirandaPsiImplUtil.getReference(this);
   }
 
 }

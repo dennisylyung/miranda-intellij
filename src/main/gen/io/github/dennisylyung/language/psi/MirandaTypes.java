@@ -69,7 +69,9 @@ public interface MirandaTypes {
   IElementType TYPE_NAME_TYPE = new MirandaElementType("TYPE_NAME_TYPE");
   IElementType TYPE_TO_TYPE = new MirandaElementType("TYPE_TO_TYPE");
   IElementType VAR = new MirandaElementType("VAR");
+  IElementType VAR_DECL = new MirandaElementType("VAR_DECL");
   IElementType VAR_LIST = new MirandaElementType("VAR_LIST");
+  IElementType VAR_USAGE = new MirandaElementType("VAR_USAGE");
   IElementType WHDEFS = new MirandaElementType("WHDEFS");
 
   IElementType ABSTYPE = new MirandaTokenType("abstype");
@@ -311,8 +313,14 @@ public interface MirandaTypes {
       else if (type == VAR) {
         return new MirandaVarImpl(node);
       }
+      else if (type == VAR_DECL) {
+        return new MirandaVarDeclImpl(node);
+      }
       else if (type == VAR_LIST) {
         return new MirandaVarListImpl(node);
+      }
+      else if (type == VAR_USAGE) {
+        return new MirandaVarUsageImpl(node);
       }
       else if (type == WHDEFS) {
         return new MirandaWhdefsImpl(node);

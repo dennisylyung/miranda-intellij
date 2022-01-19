@@ -1,9 +1,9 @@
 // This is a generated file. Not intended for manual editing.
 package io.github.dennisylyung.language.psi;
 
-import org.jetbrains.annotations.*;
-import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.PsiElement;
+import com.intellij.psi.PsiElementVisitor;
+import org.jetbrains.annotations.NotNull;
 
 public class MirandaVisitor extends PsiElementVisitor {
 
@@ -236,7 +236,7 @@ public class MirandaVisitor extends PsiElementVisitor {
   }
 
   public void visitTypename(@NotNull MirandaTypename o) {
-    visitPsiElement(o);
+    visitNamedElement(o);
   }
 
   public void visitTypenameArgtype(@NotNull MirandaTypenameArgtype o) {
@@ -255,7 +255,19 @@ public class MirandaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitVarDecl(@NotNull MirandaVarDecl o) {
+    visitNamedElement(o);
+  }
+
+  public void visitVarUsage(@NotNull MirandaVarUsage o) {
+    visitPsiElement(o);
+  }
+
   public void visitWhdefs(@NotNull MirandaWhdefs o) {
+    visitPsiElement(o);
+  }
+
+  public void visitNamedElement(@NotNull MirandaNamedElement o) {
     visitPsiElement(o);
   }
 

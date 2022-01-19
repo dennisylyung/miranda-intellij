@@ -8,11 +8,15 @@ Miranda SDK plugin for Intellij IDEs. Work in progress.
 
 * Lexical highlighting
 * Grammar based highlighting
-    * Function declarations
-    * Function type specifications
-    * Type definitions
-    * Type parameters
+  * Function declarations
+  * Function type specifications
+  * Type definitions
+  * Type parameters
 * Matching braces highlighting
+* Referencing
+  * Variable declarations
+  * Function arguments
+  * Type definitions
 
 ## References
 

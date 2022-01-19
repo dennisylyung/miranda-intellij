@@ -71,8 +71,8 @@ public class MirandaSimpleImpl extends ASTWrapperPsiElement implements MirandaSi
 
   @Override
   @Nullable
-  public MirandaVar getVar() {
-    return findChildByClass(MirandaVar.class);
+  public MirandaVarUsage getVarUsage() {
+    return findChildByClass(MirandaVarUsage.class);
   }
 
 }

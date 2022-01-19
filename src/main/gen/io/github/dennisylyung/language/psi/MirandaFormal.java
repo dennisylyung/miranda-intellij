@@ -17,6 +17,6 @@ public interface MirandaFormal extends PsiElement {
   MirandaPatList getPatList();
 
   @Nullable
-  MirandaVar getVar();
+  MirandaVarDecl getVarDecl();
 
 }

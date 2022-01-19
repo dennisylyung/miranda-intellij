@@ -5,18 +5,15 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface MirandaFnform extends PsiElement {
-
-  @Nullable
-  MirandaFnform getFnform();
+public interface MirandaVarDecl extends MirandaNamedElement {
 
   @NotNull
-  List<MirandaFormal> getFormalList();
+  MirandaVar getVar();
 
-  @NotNull
-  List<MirandaPat> getPatList();
+  String getName();
 
-  @Nullable
-  MirandaVarDecl getVarDecl();
+  PsiElement setName(String newName);
+
+  PsiElement getNameIdentifier();
 
 }
