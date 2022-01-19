@@ -1,6 +1,8 @@
-# Miranda SDK for Intellij
+# Miranda plugin for Intellij
 
-Miranda SDK plugin for Intellij IDEs. Work in progress.
+Miranda language plugin for Intellij IDEs. Work in progress.
+
+![image](https://user-images.githubusercontent.com/16577014/150119009-2f6042c9-82fc-4f21-b5bd-0d3fbf5401ed.png)
 
 ## Features
 
