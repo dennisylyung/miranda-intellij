@@ -1,9 +1,8 @@
 // This is a generated file. Not intended for manual editing.
 package io.github.dennisylyung.language.psi;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import org.jetbrains.annotations.Nullable;
 
 public interface MirandaRhs extends PsiElement {
 
@@ -14,6 +13,6 @@ public interface MirandaRhs extends PsiElement {
   MirandaSimpleRhs getSimpleRhs();
 
   @Nullable
-  PsiElement getLineEnding();
+  MirandaStatementEnding getStatementEnding();
 
 }

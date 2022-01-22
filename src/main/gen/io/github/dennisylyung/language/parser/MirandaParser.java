@@ -24,6 +24,7 @@ import static com.intellij.lang.parser.GeneratedParserUtilBase.create_token_set_
 import static com.intellij.lang.parser.GeneratedParserUtilBase.current_position_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.empty_element_parsed_guard_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.enter_section_;
+import static com.intellij.lang.parser.GeneratedParserUtilBase.eof;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.exit_section_;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.nextTokenIs;
 import static com.intellij.lang.parser.GeneratedParserUtilBase.nextTokenIsSmart;
@@ -187,8 +188,8 @@ public class MirandaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // var '=' exp line_ending?
-  //     | tform '==' type line_ending?
+  // var '=' exp statement_ending
+  //     | tform '==' type statement_ending
   public static boolean binding(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "binding")) return false;
     if (!nextTokenIs(b, "<binding>", IDENTIFIER_LOWER, OP_ZEROMORE)) return false;
@@ -200,7 +201,7 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // var '=' exp line_ending?
+  // var '=' exp statement_ending
   private static boolean binding_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "binding_0")) return false;
     boolean r;
@@ -208,19 +209,12 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     r = var(b, l + 1);
     r = r && consumeToken(b, OP_EQ);
     r = r && exp(b, l + 1);
-    r = r && binding_0_3(b, l + 1);
+    r = r && statement_ending(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // line_ending?
-  private static boolean binding_0_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "binding_0_3")) return false;
-    consumeToken(b, LINE_ENDING);
-    return true;
-  }
-
-  // tform '==' type line_ending?
+  // tform '==' type statement_ending
   private static boolean binding_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "binding_1")) return false;
     boolean r;
@@ -228,16 +222,9 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     r = tform(b, l + 1);
     r = r && consumeToken(b, OP_DOUBLE_EQ);
     r = r && type(b, l + 1, -1);
-    r = r && binding_1_3(b, l + 1);
+    r = r && statement_ending(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
-  }
-
-  // line_ending?
-  private static boolean binding_1_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "binding_1_3")) return false;
-    consumeToken(b, LINE_ENDING);
-    return true;
   }
 
   /* ********************************************************** */
@@ -254,8 +241,8 @@ public class MirandaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // alt line_ending? '=' cases
-  //     | lastcase line_ending?
+  // alt line_ending '=' cases
+  //     | lastcase statement_ending
   public static boolean cases(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cases")) return false;
     boolean r;
@@ -266,42 +253,27 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // alt line_ending? '=' cases
+  // alt line_ending '=' cases
   private static boolean cases_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cases_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = alt(b, l + 1);
-    r = r && cases_0_1(b, l + 1);
-    r = r && consumeToken(b, OP_EQ);
+    r = r && consumeTokens(b, 0, LINE_ENDING, OP_EQ);
     r = r && cases(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // line_ending?
-  private static boolean cases_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cases_0_1")) return false;
-    consumeToken(b, LINE_ENDING);
-    return true;
-  }
-
-  // lastcase line_ending?
+  // lastcase statement_ending
   private static boolean cases_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cases_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = lastcase(b, l + 1);
-    r = r && cases_1_1(b, l + 1);
+    r = r && statement_ending(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
-  }
-
-  // line_ending?
-  private static boolean cases_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cases_1_1")) return false;
-    consumeToken(b, LINE_ENDING);
-    return true;
   }
 
   /* ********************************************************** */
@@ -688,7 +660,7 @@ public class MirandaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // '++'|'--'|':'|'\/'|'&'|'>'|'>='|'=='|'~+'|'<='|'<'|'+'|'-'|'*'|'/'|'div'|'mod'|'^'|'.'|'!'
+  // '++'|'--'|':'|'\/'|'&'|'>'|'>='|'='|'~+'|'<='|'<'|'+'|'-'|'*'|'/'|'div'|'mod'|'^'|'.'|'!'
   public static boolean infix(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "infix")) return false;
     boolean r;
@@ -700,7 +672,7 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, OP_AND);
     if (!r) r = consumeToken(b, OP_GREATER);
     if (!r) r = consumeToken(b, OP_GREATER_EQUAL);
-    if (!r) r = consumeToken(b, OP_DOUBLE_EQ);
+    if (!r) r = consumeToken(b, OP_EQ);
     if (!r) r = consumeToken(b, OP_SNAKE_ADD);
     if (!r) r = consumeToken(b, OP_SMALLER_EQUAL);
     if (!r) r = consumeToken(b, OP_SMALLER);
@@ -781,8 +753,8 @@ public class MirandaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // '%include' env line_ending?
-  //     | '%export' parts line_ending?
+  // '%include' env statement_ending
+  //     | '%export' parts statement_ending
   //     | '%free' '{' sig '}'
   public static boolean libdir(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "libdir")) return false;
@@ -795,42 +767,28 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // '%include' env line_ending?
+  // '%include' env statement_ending
   private static boolean libdir_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "libdir_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, INCLUDE);
     r = r && env(b, l + 1);
-    r = r && libdir_0_2(b, l + 1);
+    r = r && statement_ending(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // line_ending?
-  private static boolean libdir_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "libdir_0_2")) return false;
-    consumeToken(b, LINE_ENDING);
-    return true;
-  }
-
-  // '%export' parts line_ending?
+  // '%export' parts statement_ending
   private static boolean libdir_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "libdir_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, EXPORT);
     r = r && parts(b, l + 1);
-    r = r && libdir_1_2(b, l + 1);
+    r = r && statement_ending(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
-  }
-
-  // line_ending?
-  private static boolean libdir_1_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "libdir_1_2")) return false;
-    consumeToken(b, LINE_ENDING);
-    return true;
   }
 
   // '%free' '{' sig '}'
@@ -1000,7 +958,7 @@ public class MirandaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // cases| simple_rhs line_ending?
+  // cases| simple_rhs statement_ending
   public static boolean rhs(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "rhs")) return false;
     boolean r;
@@ -1011,22 +969,15 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // simple_rhs line_ending?
+  // simple_rhs statement_ending
   private static boolean rhs_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "rhs_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = simple_rhs(b, l + 1);
-    r = r && rhs_1_1(b, l + 1);
+    r = r && statement_ending(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
-  }
-
-  // line_ending?
-  private static boolean rhs_1_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "rhs_1_1")) return false;
-    consumeToken(b, LINE_ENDING);
-    return true;
   }
 
   /* ********************************************************** */
@@ -1249,8 +1200,8 @@ public class MirandaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // var-list '::' type line_ending?
-  //     | tform-list '::' type line_ending?
+  // var-list '::' type statement_ending
+  //     | tform-list '::' type statement_ending
   public static boolean spec(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "spec")) return false;
     if (!nextTokenIs(b, "<spec>", IDENTIFIER_LOWER, OP_ZEROMORE)) return false;
@@ -1262,7 +1213,7 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // var-list '::' type line_ending?
+  // var-list '::' type statement_ending
   private static boolean spec_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "spec_0")) return false;
     boolean r;
@@ -1270,19 +1221,12 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     r = var_list(b, l + 1);
     r = r && consumeToken(b, OP_SPEC);
     r = r && type(b, l + 1, -1);
-    r = r && spec_0_3(b, l + 1);
+    r = r && statement_ending(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // line_ending?
-  private static boolean spec_0_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "spec_0_3")) return false;
-    consumeToken(b, LINE_ENDING);
-    return true;
-  }
-
-  // tform-list '::' type line_ending?
+  // tform-list '::' type statement_ending
   private static boolean spec_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "spec_1")) return false;
     boolean r;
@@ -1290,22 +1234,27 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     r = tform_list(b, l + 1);
     r = r && consumeToken(b, OP_SPEC);
     r = r && type(b, l + 1, -1);
-    r = r && spec_1_3(b, l + 1);
+    r = r && statement_ending(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // line_ending?
-  private static boolean spec_1_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "spec_1_3")) return false;
-    consumeToken(b, LINE_ENDING);
-    return true;
+  /* ********************************************************** */
+  // <<eof>> | line_ending
+  public static boolean statement_ending(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "statement_ending")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, STATEMENT_ENDING, "<statement ending>");
+    r = eof(b, l + 1);
+    if (!r) r = consumeToken(b, LINE_ENDING);
+    exit_section_(b, l, m, r, false, null);
+    return r;
   }
 
   /* ********************************************************** */
-  // tform '==' type line_ending?
-  //     | tform '::=' constructs line_ending?
-  //     | 'abstype' tform-list 'with' sig line_ending?
+  // tform '==' type statement_ending
+  //     | tform '::=' constructs statement_ending
+  //     | 'abstype' tform-list 'with' sig statement_ending
   public static boolean tdef(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "tdef")) return false;
     boolean r;
@@ -1317,7 +1266,7 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // tform '==' type line_ending?
+  // tform '==' type statement_ending
   private static boolean tdef_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "tdef_0")) return false;
     boolean r;
@@ -1325,19 +1274,12 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     r = tform(b, l + 1);
     r = r && consumeToken(b, OP_DOUBLE_EQ);
     r = r && type(b, l + 1, -1);
-    r = r && tdef_0_3(b, l + 1);
+    r = r && statement_ending(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // line_ending?
-  private static boolean tdef_0_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "tdef_0_3")) return false;
-    consumeToken(b, LINE_ENDING);
-    return true;
-  }
-
-  // tform '::=' constructs line_ending?
+  // tform '::=' constructs statement_ending
   private static boolean tdef_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "tdef_1")) return false;
     boolean r;
@@ -1345,19 +1287,12 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     r = tform(b, l + 1);
     r = r && consumeToken(b, OP_IS);
     r = r && constructs(b, l + 1);
-    r = r && tdef_1_3(b, l + 1);
+    r = r && statement_ending(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
-  // line_ending?
-  private static boolean tdef_1_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "tdef_1_3")) return false;
-    consumeToken(b, LINE_ENDING);
-    return true;
-  }
-
-  // 'abstype' tform-list 'with' sig line_ending?
+  // 'abstype' tform-list 'with' sig statement_ending
   private static boolean tdef_2(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "tdef_2")) return false;
     boolean r;
@@ -1366,16 +1301,9 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     r = r && tform_list(b, l + 1);
     r = r && consumeToken(b, WITH);
     r = r && sig(b, l + 1);
-    r = r && tdef_2_4(b, l + 1);
+    r = r && statement_ending(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
-  }
-
-  // line_ending?
-  private static boolean tdef_2_4(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "tdef_2_4")) return false;
-    consumeToken(b, LINE_ENDING);
-    return true;
   }
 
   /* ********************************************************** */

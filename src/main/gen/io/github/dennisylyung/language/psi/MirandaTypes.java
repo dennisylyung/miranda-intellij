@@ -1,10 +1,72 @@
 // This is a generated file. Not intended for manual editing.
 package io.github.dennisylyung.language.psi;
 
-import com.intellij.psi.tree.IElementType;
-import com.intellij.psi.PsiElement;
 import com.intellij.lang.ASTNode;
-import io.github.dennisylyung.language.psi.impl.*;
+import com.intellij.psi.PsiElement;
+import com.intellij.psi.tree.IElementType;
+import io.github.dennisylyung.language.psi.impl.MirandaAliaseImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaAliasesImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaAltImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaArgtypeImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaBinderImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaBindingImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaBoolImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaCasesImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaConstructImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaConstructorImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaConstructsImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaDeclImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaDefImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaE1InfixImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaE1PrefixImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaE1SimpleImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaEnvImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaExpImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaExpsImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaFnformImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaFormalImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaGeneratorImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaInfixImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaLastaltImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaLastcaseImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaLibdirImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaListImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaLiteralImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaPartImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaPartsImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaPatColonPatImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaPatConstructFormalImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaPatConstructPatImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaPatFormalImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaPatListImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaPatNumeralImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaPatParenthesisFormalImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaPatPlusPatImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaPrefix1Impl;
+import io.github.dennisylyung.language.psi.impl.MirandaPrefixImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaQualifierImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaQualifsImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaRhsImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaSigImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaSimpleImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaSimpleRhsImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaSpecImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaStatementEndingImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaTdefImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaTformImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaTformListImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaTypeArgtypeImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaTypeListImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaTypeNameTypeImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaTypeToTypeImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaTypenameArgtypeImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaTypenameImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaTypevarImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaVarDeclImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaVarImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaVarListImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaVarUsageImpl;
+import io.github.dennisylyung.language.psi.impl.MirandaWhdefsImpl;
 
 public interface MirandaTypes {
 
@@ -57,6 +119,7 @@ public interface MirandaTypes {
   IElementType SIMPLE = new MirandaElementType("SIMPLE");
   IElementType SIMPLE_RHS = new MirandaElementType("SIMPLE_RHS");
   IElementType SPEC = new MirandaElementType("SPEC");
+  IElementType STATEMENT_ENDING = new MirandaElementType("STATEMENT_ENDING");
   IElementType TDEF = new MirandaElementType("TDEF");
   IElementType TFORM = new MirandaElementType("TFORM");
   IElementType TFORM_LIST = new MirandaElementType("TFORM_LIST");
@@ -279,50 +342,37 @@ public interface MirandaTypes {
       }
       else if (type == SPEC) {
         return new MirandaSpecImpl(node);
-      }
-      else if (type == TDEF) {
+      } else if (type == STATEMENT_ENDING) {
+        return new MirandaStatementEndingImpl(node);
+      } else if (type == TDEF) {
         return new MirandaTdefImpl(node);
-      }
-      else if (type == TFORM) {
+      } else if (type == TFORM) {
         return new MirandaTformImpl(node);
-      }
-      else if (type == TFORM_LIST) {
+      } else if (type == TFORM_LIST) {
         return new MirandaTformListImpl(node);
-      }
-      else if (type == TYPENAME) {
+      } else if (type == TYPENAME) {
         return new MirandaTypenameImpl(node);
-      }
-      else if (type == TYPENAME_ARGTYPE) {
+      } else if (type == TYPENAME_ARGTYPE) {
         return new MirandaTypenameArgtypeImpl(node);
-      }
-      else if (type == TYPEVAR) {
+      } else if (type == TYPEVAR) {
         return new MirandaTypevarImpl(node);
-      }
-      else if (type == TYPE_ARGTYPE) {
+      } else if (type == TYPE_ARGTYPE) {
         return new MirandaTypeArgtypeImpl(node);
-      }
-      else if (type == TYPE_LIST) {
+      } else if (type == TYPE_LIST) {
         return new MirandaTypeListImpl(node);
-      }
-      else if (type == TYPE_NAME_TYPE) {
+      } else if (type == TYPE_NAME_TYPE) {
         return new MirandaTypeNameTypeImpl(node);
-      }
-      else if (type == TYPE_TO_TYPE) {
+      } else if (type == TYPE_TO_TYPE) {
         return new MirandaTypeToTypeImpl(node);
-      }
-      else if (type == VAR) {
+      } else if (type == VAR) {
         return new MirandaVarImpl(node);
-      }
-      else if (type == VAR_DECL) {
+      } else if (type == VAR_DECL) {
         return new MirandaVarDeclImpl(node);
-      }
-      else if (type == VAR_LIST) {
+      } else if (type == VAR_LIST) {
         return new MirandaVarListImpl(node);
-      }
-      else if (type == VAR_USAGE) {
+      } else if (type == VAR_USAGE) {
         return new MirandaVarUsageImpl(node);
-      }
-      else if (type == WHDEFS) {
+      } else if (type == WHDEFS) {
         return new MirandaWhdefsImpl(node);
       }
       throw new AssertionError("Unknown element type: " + type);

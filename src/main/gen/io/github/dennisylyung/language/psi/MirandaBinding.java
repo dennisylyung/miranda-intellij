@@ -1,14 +1,17 @@
 // This is a generated file. Not intended for manual editing.
 package io.github.dennisylyung.language.psi;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public interface MirandaBinding extends PsiElement {
 
   @Nullable
   MirandaExp getExp();
+
+  @NotNull
+  MirandaStatementEnding getStatementEnding();
 
   @Nullable
   MirandaTform getTform();
@@ -18,8 +21,5 @@ public interface MirandaBinding extends PsiElement {
 
   @Nullable
   MirandaVar getVar();
-
-  @Nullable
-  PsiElement getLineEnding();
 
 }

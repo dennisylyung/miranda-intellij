@@ -1,15 +1,16 @@
 // This is a generated file. Not intended for manual editing.
 package io.github.dennisylyung.language.psi.impl;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
-import static io.github.dennisylyung.language.psi.MirandaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
-import io.github.dennisylyung.language.psi.*;
+import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElementVisitor;
+import io.github.dennisylyung.language.psi.MirandaCases;
+import io.github.dennisylyung.language.psi.MirandaRhs;
+import io.github.dennisylyung.language.psi.MirandaSimpleRhs;
+import io.github.dennisylyung.language.psi.MirandaStatementEnding;
+import io.github.dennisylyung.language.psi.MirandaVisitor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class MirandaRhsImpl extends ASTWrapperPsiElement implements MirandaRhs {
 
@@ -41,8 +42,8 @@ public class MirandaRhsImpl extends ASTWrapperPsiElement implements MirandaRhs {
 
   @Override
   @Nullable
-  public PsiElement getLineEnding() {
-    return findChildByType(LINE_ENDING);
+  public MirandaStatementEnding getStatementEnding() {
+    return findChildByClass(MirandaStatementEnding.class);
   }
 
 }
