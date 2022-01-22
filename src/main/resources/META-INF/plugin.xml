@@ -1,10 +1,10 @@
 <idea-plugin>
     <id>io.github.dennisylyung.intellij-miranda</id>
-    <name>SDK: Miranda Language</name>
+    <name>SDK: Miranda</name>
     <vendor email="dennisylyung@gmail.com" url="http://github.com/dennisylyung">Dennis Yung</vendor>
 
     <description><![CDATA[
-    SDK for language Miranda, supporting file recognition.
+    SDK for programming language Miranda, supporting syntax highlighting and referencing.
     ]]></description>
 
     <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
