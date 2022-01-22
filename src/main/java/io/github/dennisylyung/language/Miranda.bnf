@@ -88,14 +88,14 @@ decl ::= def | tdef | spec | libdir | line_ending
 
 def ::= fnform '=' rhs| pat '=' rhs
 
-tdef ::= tform '==' type line_ending?
-    | tform '::=' constructs line_ending?
-    | 'abstype' tform-list 'with' sig line_ending?
+tdef ::= tform '==' type statement_ending
+    | tform '::=' constructs statement_ending
+    | 'abstype' tform-list 'with' sig statement_ending
 
 tform-list ::= <<list tform>>
 
-spec ::= var-list '::' type line_ending?
-    | tform-list '::' type line_ending?
+spec ::= var-list '::' type statement_ending
+    | tform-list '::' type statement_ending
 
 var-list ::= <<list var_decl>>
 
@@ -159,12 +159,12 @@ formal ::= var_decl
 
 pat-list ::= <<list pat>>
 
-rhs ::= cases| simple_rhs line_ending?
+rhs ::= cases| simple_rhs statement_ending
 
 simple_rhs ::= exp whdefs?
 
-cases ::= alt line_ending? '=' cases
-    | lastcase line_ending?
+cases ::= alt line_ending '=' cases
+    | lastcase statement_ending
 
 alt ::= exp ',' 'if'? exp
 
@@ -230,20 +230,20 @@ bool ::= 'True' | 'False'
 
 typevar ::= '*'+
 
-infix ::= '++'|'--'|':'|'\/'|'&'|'>'|'>='|'=='|'~+'|'<='|'<'|'+'|'-'|'*'|'/'|'div'|'mod'|'^'|'.'|'!'
+infix ::= '++'|'--'|':'|'\/'|'&'|'>'|'>='|'='|'~+'|'<='|'<'|'+'|'-'|'*'|'/'|'div'|'mod'|'^'|'.'|'!'
 
 prefix1 ::= '~' | '#'
 
 prefix ::= '~' | '#' | '-'
 
-libdir ::= '%include' env line_ending?
-    | '%export' parts line_ending?
+libdir ::= '%include' env statement_ending
+    | '%export' parts statement_ending
     | '%free' '{' sig '}'
 
 env ::= pathname binder? aliases?
 binder ::= '{' binding+ '}'
-binding ::= var '=' exp line_ending?
-    | tform '==' type line_ending?
+binding ::= var '=' exp statement_ending
+    | tform '==' type statement_ending
 aliases ::= aliase+
 aliase ::= identifier_lower '/' identifier_lower
     | identifier_upper '/' identifier_upper
@@ -252,3 +252,4 @@ part ::= identifier_lower
     | pathname
     | '+'
     | '-'identifier_lower
+statement_ending ::= <<eof>> | line_ending

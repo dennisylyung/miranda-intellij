@@ -1,15 +1,17 @@
 // This is a generated file. Not intended for manual editing.
 package io.github.dennisylyung.language.psi.impl;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
-import static io.github.dennisylyung.language.psi.MirandaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
-import io.github.dennisylyung.language.psi.*;
+import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElementVisitor;
+import io.github.dennisylyung.language.psi.MirandaEnv;
+import io.github.dennisylyung.language.psi.MirandaLibdir;
+import io.github.dennisylyung.language.psi.MirandaParts;
+import io.github.dennisylyung.language.psi.MirandaSig;
+import io.github.dennisylyung.language.psi.MirandaStatementEnding;
+import io.github.dennisylyung.language.psi.MirandaVisitor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class MirandaLibdirImpl extends ASTWrapperPsiElement implements MirandaLibdir {
 
@@ -47,8 +49,8 @@ public class MirandaLibdirImpl extends ASTWrapperPsiElement implements MirandaLi
 
   @Override
   @Nullable
-  public PsiElement getLineEnding() {
-    return findChildByType(LINE_ENDING);
+  public MirandaStatementEnding getStatementEnding() {
+    return findChildByClass(MirandaStatementEnding.class);
   }
 
 }

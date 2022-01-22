@@ -1,15 +1,18 @@
 // This is a generated file. Not intended for manual editing.
 package io.github.dennisylyung.language.psi.impl;
 
-import java.util.List;
-import org.jetbrains.annotations.*;
-import com.intellij.lang.ASTNode;
-import com.intellij.psi.PsiElement;
-import com.intellij.psi.PsiElementVisitor;
-import com.intellij.psi.util.PsiTreeUtil;
-import static io.github.dennisylyung.language.psi.MirandaTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
-import io.github.dennisylyung.language.psi.*;
+import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElementVisitor;
+import io.github.dennisylyung.language.psi.MirandaBinding;
+import io.github.dennisylyung.language.psi.MirandaExp;
+import io.github.dennisylyung.language.psi.MirandaStatementEnding;
+import io.github.dennisylyung.language.psi.MirandaTform;
+import io.github.dennisylyung.language.psi.MirandaType;
+import io.github.dennisylyung.language.psi.MirandaVar;
+import io.github.dennisylyung.language.psi.MirandaVisitor;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class MirandaBindingImpl extends ASTWrapperPsiElement implements MirandaBinding {
 
@@ -23,7 +26,7 @@ public class MirandaBindingImpl extends ASTWrapperPsiElement implements MirandaB
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
-    if (visitor instanceof MirandaVisitor) accept((MirandaVisitor)visitor);
+    if (visitor instanceof MirandaVisitor) accept((MirandaVisitor) visitor);
     else super.accept(visitor);
   }
 
@@ -31,6 +34,12 @@ public class MirandaBindingImpl extends ASTWrapperPsiElement implements MirandaB
   @Nullable
   public MirandaExp getExp() {
     return findChildByClass(MirandaExp.class);
+  }
+
+  @Override
+  @NotNull
+  public MirandaStatementEnding getStatementEnding() {
+    return findNotNullChildByClass(MirandaStatementEnding.class);
   }
 
   @Override
@@ -49,12 +58,6 @@ public class MirandaBindingImpl extends ASTWrapperPsiElement implements MirandaB
   @Nullable
   public MirandaVar getVar() {
     return findChildByClass(MirandaVar.class);
-  }
-
-  @Override
-  @Nullable
-  public PsiElement getLineEnding() {
-    return findChildByType(LINE_ENDING);
   }
 
 }
