@@ -41,6 +41,7 @@
       OP_DOT='.'
       OP_SIMILAR='~'
       OP_HASH='#'
+      OP_DOLLAR='$'
       SEP_COMMA=','
       COLON=':'
       SEMICOLON=';'
@@ -105,7 +106,7 @@ constructs ::= construct '|' constructs
     | construct
 
 construct ::= constructor argtype*
-    | type constructor type
+    | type '$' constructor type
     | '(' construct ')' argtype*
 
 type ::= typename_argtype
@@ -119,7 +120,7 @@ typename_argtype ::= typename argtype* {extends=type}
 
 type_to_type ::= type '->' type {extends=type}
 
-type_name_type ::= type typename type {extends=type}
+type_name_type ::= type '$' typename type {extends=type}
 
 argtype ::= typename
     | typevar
@@ -129,10 +130,10 @@ argtype ::= typename
 type-list ::= <<list type>>
 
 tform ::= typename typevar*
-    | typevar typename typevar
+    | typevar '$' typename typevar
 
 fnform ::= var_decl formal*
-    | pat var_decl pat
+    | pat '$' var_decl pat
     | '(' fnform ')' formal*
 
 pat ::= pat_numeral
@@ -148,7 +149,7 @@ pat_numeral ::= '-' number {extends=pat}
 pat_construct_formal ::= constructor formal* {extends=pat}
 pat_colon_pat ::= pat ':' pat {extends=pat}
 pat_plus_pat ::= pat '+' pat {extends=pat}
-pat_construct_pat ::= pat constructor pat {extends=pat}
+pat_construct_pat ::= pat '$' constructor pat {extends=pat}
 pat_parenthesis_formal ::= '(' pat ')' formal* {extends=pat}
 
 formal ::= var_decl
