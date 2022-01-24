@@ -105,14 +105,14 @@ sig ::= spec+
 constructs ::= construct '|' constructs
     | construct
 
-construct ::= constructor argtype*
-    | type '$' constructor type
+construct ::= type '$' constructor type
     | '(' construct ')' argtype*
+    | constructor argtype*
 
 type ::= typename_argtype
     | type_to_type
-    | type_argtype
     | type_name_type
+    | type_argtype
 
 type_argtype ::= argtype {extends=type}
 
@@ -129,12 +129,12 @@ argtype ::= typename
 
 type-list ::= <<list type>>
 
-tform ::= typename typevar*
-    | typevar '$' typename typevar
+tform ::= typevar '$' typename typevar
+    | typename typevar*
 
-fnform ::= var_decl formal*
-    | pat '$' var_decl pat
+fnform ::= pat '$' var_decl pat
     | '(' fnform ')' formal*
+    | var_decl formal*
 
 pat ::= pat_numeral
     | pat_construct_formal

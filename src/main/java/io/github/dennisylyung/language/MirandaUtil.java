@@ -50,13 +50,21 @@ public class MirandaUtil {
             return null;
         }
         @Nullable MirandaFormal[] formals = PsiTreeUtil.getChildrenOfType(fnform, MirandaFormal.class);
-        if (formals == null) {
-            return null;
+        if (formals != null) {
+            for (MirandaFormal formal : formals) {
+                MirandaVarDecl var = findVarInFormal(formal, key);
+                if (var != null) {
+                    return var;
+                }
+            }
         }
-        for (MirandaFormal formal : formals) {
-            MirandaVarDecl var = findVarInFormal(formal, key);
-            if (var != null) {
-                return var;
+        @Nullable MirandaPat[] pats = PsiTreeUtil.getChildrenOfType(fnform, MirandaPat.class);
+        if (pats != null) {
+            for (MirandaPat pat : pats) {
+                MirandaVarDecl var = findVarInPat(pat, key);
+                if (var != null) {
+                    return var;
+                }
             }
         }
         return null;

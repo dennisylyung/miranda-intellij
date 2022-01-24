@@ -277,9 +277,9 @@ public class MirandaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // constructor argtype*
-  //     | type '$' constructor type
+  // type '$' constructor type
   //     | '(' construct ')' argtype*
+  //     | constructor argtype*
   public static boolean construct(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "construct")) return false;
     boolean r;
@@ -291,31 +291,9 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // constructor argtype*
+  // type '$' constructor type
   private static boolean construct_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "construct_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = constructor(b, l + 1);
-    r = r && construct_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // argtype*
-  private static boolean construct_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_0_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!argtype(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "construct_0_1", c)) break;
-    }
-    return true;
-  }
-
-  // type '$' constructor type
-  private static boolean construct_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = type(b, l + 1, -1);
@@ -327,25 +305,47 @@ public class MirandaParser implements PsiParser, LightPsiParser {
   }
 
   // '(' construct ')' argtype*
-  private static boolean construct_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_2")) return false;
+  private static boolean construct_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "construct_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LEFT_PAREN);
     r = r && construct(b, l + 1);
     r = r && consumeToken(b, RIGHT_PAREN);
-    r = r && construct_2_3(b, l + 1);
+    r = r && construct_1_3(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // argtype*
-  private static boolean construct_2_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "construct_2_3")) return false;
+  private static boolean construct_1_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "construct_1_3")) return false;
     while (true) {
       int c = current_position_(b);
       if (!argtype(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "construct_2_3", c)) break;
+      if (!empty_element_parsed_guard_(b, "construct_1_3", c)) break;
+    }
+    return true;
+  }
+
+  // constructor argtype*
+  private static boolean construct_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "construct_2")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = constructor(b, l + 1);
+    r = r && construct_2_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // argtype*
+  private static boolean construct_2_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "construct_2_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!argtype(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "construct_2_1", c)) break;
     }
     return true;
   }
@@ -491,9 +491,9 @@ public class MirandaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // var_decl formal*
-  //     | pat '$' var_decl pat
+  // pat '$' var_decl pat
   //     | '(' fnform ')' formal*
+  //     | var_decl formal*
   public static boolean fnform(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "fnform")) return false;
     boolean r;
@@ -505,31 +505,9 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // var_decl formal*
+  // pat '$' var_decl pat
   private static boolean fnform_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "fnform_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = var_decl(b, l + 1);
-    r = r && fnform_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // formal*
-  private static boolean fnform_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "fnform_0_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!formal(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "fnform_0_1", c)) break;
-    }
-    return true;
-  }
-
-  // pat '$' var_decl pat
-  private static boolean fnform_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "fnform_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = pat(b, l + 1, -1);
@@ -541,25 +519,47 @@ public class MirandaParser implements PsiParser, LightPsiParser {
   }
 
   // '(' fnform ')' formal*
-  private static boolean fnform_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "fnform_2")) return false;
+  private static boolean fnform_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fnform_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, LEFT_PAREN);
     r = r && fnform(b, l + 1);
     r = r && consumeToken(b, RIGHT_PAREN);
-    r = r && fnform_2_3(b, l + 1);
+    r = r && fnform_1_3(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // formal*
-  private static boolean fnform_2_3(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "fnform_2_3")) return false;
+  private static boolean fnform_1_3(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fnform_1_3")) return false;
     while (true) {
       int c = current_position_(b);
       if (!formal(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "fnform_2_3", c)) break;
+      if (!empty_element_parsed_guard_(b, "fnform_1_3", c)) break;
+    }
+    return true;
+  }
+
+  // var_decl formal*
+  private static boolean fnform_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fnform_2")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = var_decl(b, l + 1);
+    r = r && fnform_2_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // formal*
+  private static boolean fnform_2_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "fnform_2_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!formal(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "fnform_2_1", c)) break;
     }
     return true;
   }
@@ -1309,8 +1309,8 @@ public class MirandaParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // typename typevar*
-  //     | typevar '$' typename typevar
+  // typevar '$' typename typevar
+  //     | typename typevar*
   public static boolean tform(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "tform")) return false;
     if (!nextTokenIs(b, "<tform>", IDENTIFIER_LOWER, OP_ZEROMORE)) return false;
@@ -1322,31 +1322,9 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // typename typevar*
+  // typevar '$' typename typevar
   private static boolean tform_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "tform_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = typename(b, l + 1);
-    r = r && tform_0_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // typevar*
-  private static boolean tform_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "tform_0_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!typevar(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "tform_0_1", c)) break;
-    }
-    return true;
-  }
-
-  // typevar '$' typename typevar
-  private static boolean tform_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "tform_1")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = typevar(b, l + 1);
@@ -1355,6 +1333,28 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     r = r && typevar(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
+  }
+
+  // typename typevar*
+  private static boolean tform_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "tform_1")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = typename(b, l + 1);
+    r = r && tform_1_1(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // typevar*
+  private static boolean tform_1_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "tform_1_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!typevar(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "tform_1_1", c)) break;
+    }
+    return true;
   }
 
   /* ********************************************************** */
@@ -1690,8 +1690,8 @@ public class MirandaParser implements PsiParser, LightPsiParser {
   // Operator priority table:
   // 0: ATOM(typename_argtype)
   // 1: BINARY(type_to_type)
-  // 2: ATOM(type_argtype)
-  // 3: BINARY(type_name_type)
+  // 2: BINARY(type_name_type)
+  // 3: ATOM(type_argtype)
   public static boolean type(PsiBuilder b, int l, int g) {
     if (!recursion_guard_(b, l, "type")) return false;
     addVariant(b, "<type>");
@@ -1713,8 +1713,8 @@ public class MirandaParser implements PsiParser, LightPsiParser {
       if (g < 1 && consumeTokenSmart(b, OP_ARG)) {
         r = type(b, l, 1);
         exit_section_(b, l, m, TYPE_TO_TYPE, r, true, null);
-      } else if (g < 3 && type_name_type_0(b, l + 1)) {
-        r = type(b, l, 3);
+      } else if (g < 2 && type_name_type_0(b, l + 1)) {
+        r = type(b, l, 2);
         exit_section_(b, l, m, TYPE_NAME_TYPE, r, true, null);
       } else {
         exit_section_(b, l, m, null, false, false, null);
@@ -1747,16 +1747,6 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     return true;
   }
 
-  // argtype
-  public static boolean type_argtype(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "type_argtype")) return false;
-    boolean r;
-    Marker m = enter_section_(b, l, _NONE_, TYPE_ARGTYPE, "<type argtype>");
-    r = argtype(b, l + 1);
-    exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
   // '$' typename
   private static boolean type_name_type_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "type_name_type_0")) return false;
@@ -1765,6 +1755,16 @@ public class MirandaParser implements PsiParser, LightPsiParser {
     r = consumeTokenSmart(b, OP_DOLLAR);
     r = r && typename(b, l + 1);
     exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // argtype
+  public static boolean type_argtype(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "type_argtype")) return false;
+    boolean r;
+    Marker m = enter_section_(b, l, _NONE_, TYPE_ARGTYPE, "<type argtype>");
+    r = argtype(b, l + 1);
+    exit_section_(b, l, m, r, false, null);
     return r;
   }
 

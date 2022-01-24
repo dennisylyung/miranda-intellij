@@ -10,7 +10,6 @@ import io.github.dennisylyung.language.psi.MirandaConstruct;
 import io.github.dennisylyung.language.psi.MirandaConstructor;
 import io.github.dennisylyung.language.psi.MirandaConstructs;
 import io.github.dennisylyung.language.psi.MirandaList;
-import io.github.dennisylyung.language.psi.MirandaVar;
 import io.github.dennisylyung.language.psi.MirandaVarDecl;
 import io.github.dennisylyung.language.psi.MirandaVarList;
 import io.github.dennisylyung.language.psi.impl.MirandaFnformImpl;
@@ -49,7 +48,7 @@ public class MirandaAnnotator implements Annotator {
 
 
     private void annotateFunctionDeclaration(@NotNull final PsiElement element, @NotNull AnnotationHolder holder) {
-        @Nullable MirandaVar var = PsiTreeUtil.findChildOfType(element, MirandaVar.class);
+        @Nullable MirandaVarDecl var = PsiTreeUtil.getChildOfType(element, MirandaVarDecl.class);
         if (var == null) {
             return;
         }
