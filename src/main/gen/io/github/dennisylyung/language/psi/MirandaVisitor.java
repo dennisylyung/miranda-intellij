@@ -195,27 +195,27 @@ public class MirandaVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-    public void visitSimpleRhs(@NotNull MirandaSimpleRhs o) {
-        visitPsiElement(o);
-    }
+  public void visitSimpleRhs(@NotNull MirandaSimpleRhs o) {
+    visitPsiElement(o);
+  }
 
-    public void visitSpec(@NotNull MirandaSpec o) {
-        visitPsiElement(o);
-    }
+  public void visitSpec(@NotNull MirandaSpec o) {
+    visitPsiElement(o);
+  }
 
-    public void visitStatementEnding(@NotNull MirandaStatementEnding o) {
-        visitPsiElement(o);
-    }
+  public void visitStatementEnding(@NotNull MirandaStatementEnding o) {
+    visitPsiElement(o);
+  }
 
-    public void visitTdef(@NotNull MirandaTdef o) {
-        visitPsiElement(o);
-    }
+  public void visitTdef(@NotNull MirandaTdef o) {
+    visitPsiElement(o);
+  }
 
-    public void visitTform(@NotNull MirandaTform o) {
-        visitPsiElement(o);
-    }
+  public void visitTform(@NotNull MirandaTform o) {
+    visitPsiElement(o);
+  }
 
-    public void visitTformList(@NotNull MirandaTformList o) {
+  public void visitTformList(@NotNull MirandaTformList o) {
     visitPsiElement(o);
   }
 

@@ -161,6 +161,7 @@ public interface MirandaTypes {
   IElementType OP_AND = new MirandaTokenType("&");
   IElementType OP_ARG = new MirandaTokenType("->");
   IElementType OP_BACK_FWD_SLASH = new MirandaTokenType("\\/");
+  IElementType OP_DOLLAR = new MirandaTokenType("$");
   IElementType OP_DOT = new MirandaTokenType(".");
   IElementType OP_DOTS = new MirandaTokenType("..");
   IElementType OP_DOUBLE_ADD = new MirandaTokenType("++");

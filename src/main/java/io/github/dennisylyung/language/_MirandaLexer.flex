@@ -65,6 +65,7 @@ PATHNAME=('[^'\s]+')|(\<[^>\s]+\>)
   "."                     { return OP_DOT; }
   "~"                     { return OP_SIMILAR; }
   "#"                     { return OP_HASH; }
+  "$"                     { return OP_DOLLAR; }
   ","                     { return SEP_COMMA; }
   ":"                     { return COLON; }
   ";"                     { return SEMICOLON; }
